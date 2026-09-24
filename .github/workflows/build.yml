@@ -34,6 +34,11 @@ jobs:
         run: |
           flutter create . --org com.example --project-name bazarkart_app
 
+      - name: Restore assets and pubspec
+        run: |
+          mkdir -p lib/assets
+          git checkout HEAD -- lib/assets/logo.png pubspec.yaml || true
+
       - name: Install dependencies
         run: flutter pub get
 
