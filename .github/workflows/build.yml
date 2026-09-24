@@ -1,10 +1,10 @@
-name: Build Flutter APK
+name: Build Flutter App
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "master" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "master" ]
 
 jobs:
   build:
@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Java
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
           java-version: '17'
@@ -25,43 +25,14 @@ jobs:
         with:
           flutter-version: '3.19.x'
           channel: 'stable'
-
-      - name: Clean directory except workflow
-        run: |
-          find . -maxdepth 1 ! -name '.' ! -name '.github' ! -name '.git' -exec rm -rf {} +
-
-      - name: Create fresh Flutter project
-        run: |
-          flutter create . --org com.example --project-name bazarkart_app
-
-      - name: Restore logo asset
-        run: |
-          mkdir -p lib/assets
-          git checkout HEAD -- lib/assets/logo.png || true
-
-      - name: Add launcher icons dependency
-        run: |
-          echo "" >> pubspec.yaml
-          echo "  flutter_launcher_icons: \"^0.13.1\"" >> pubspec.yaml
-          echo "" >> pubspec.yaml
-          echo "flutter_launcher_icons:" >> pubspec.yaml
-          echo "  image_path: \"lib/assets/logo.png\"" >> pubspec.yaml
-          echo "  android: true" >> pubspec.yaml
-          echo "  ios: true" >> pubspec.yaml
+          cache: true
 
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Generate App Icon
-        run: |
-          flutter pub run flutter_launcher_icons:main
+      - name: Run Flutter Doctor
+        run: flutter doctor
 
       - name: Build APK
         run: flutter build apk --release
-
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-release
-          path: build/app/outputs/flutter-apk/app-release.apk
-          
+        
