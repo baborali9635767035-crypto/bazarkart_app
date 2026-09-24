@@ -34,10 +34,20 @@ jobs:
         run: |
           flutter create . --org com.example --project-name bazarkart_app
 
-      - name: Restore assets and pubspec
+      - name: Restore logo asset
         run: |
           mkdir -p lib/assets
-          git checkout HEAD -- lib/assets/logo.png pubspec.yaml || true
+          git checkout HEAD -- lib/assets/logo.png || true
+
+      - name: Add launcher icons dependency
+        run: |
+          echo "" >> pubspec.yaml
+          echo "  flutter_launcher_icons: \"^0.13.1\"" >> pubspec.yaml
+          echo "" >> pubspec.yaml
+          echo "flutter_launcher_icons:" >> pubspec.yaml
+          echo "  image_path: \"lib/assets/logo.png\"" >> pubspec.yaml
+          echo "  android: true" >> pubspec.yaml
+          echo "  ios: true" >> pubspec.yaml
 
       - name: Install dependencies
         run: flutter pub get
