@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "435440966735",
+    "project_id": "bazarkart-a35ab",
+    "storage_bucket": "bazarkart-a35ab.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:435440966735:android:4a5f673c6eb35e8af51e3a",
+        "android_client_info": {
+          "package_name": "com.example.bazarkart_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0OHaCFiPfGGO6VAHBl25RgT2KLYPnaPQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
